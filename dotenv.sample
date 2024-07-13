@@ -1,0 +1,21 @@
+# 1. Lines staring with #, with optional leading whitespace, will be ignored
+# 2. Trailing comments are NOT ignored!
+# 3. Whitespace around the "=" sign will be removed, as will leading and trailing whitespace
+# 4. Either single- (') or double- (") quotes work
+# 5. Variables are case-insensitive (values are NOT!!!)
+DNSAPI_USERNAME = myopenproviderapiuser
+dnsapi_password="My very long and complex passphrase"
+DNSAPI_MODULE = providers.openprovider
+DNSAPI_CLASS = OpenProvider
+DNSAPI_DOMAINS = example.com, subdomain.example.net
+
+# Enable basic authentication: values
+#  * no value: Basic auth disabled
+#  * sufficient: Basic auth success allows API
+#  * required: Basic auth _and_ allowed_hosts check required (if enabled)
+BASIC_AUTH = sufficient
+
+# If ALLOWED_HOSTS is not set, ALLOWED_PROXIES and PROXY_XFF are unused
+ALLOWED_HOSTS = 127.0.0.1, 192.168.24.0/24
+ALLOWED_PROXIES = 192.168.24.2, 192.168.24.80
+PROXY_XFF = X-Forwarded-For
