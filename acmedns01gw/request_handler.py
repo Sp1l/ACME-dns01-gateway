@@ -94,6 +94,8 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     def respond(self, code: int = 200, message: str = None):
         """Generate the response"""
+        if isinstance(message, dict):
+            message = json.dumps(message)
         if code >= 400:
             self.send_error(code, explain=message)
             return
@@ -103,7 +105,6 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(bytes(message, "utf-8"))
             self.wfile.flush()
-            self.wfile.close()
             logger.info("")
 
     def process_request(self, method: str):
@@ -141,7 +142,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             logger.error('"%s" does not match %s from %s',
                 dns_01.fqdn, config.dnsapi_domains, self._remote_ip)
             return self.respond(403, f'"{dns_01.fqdn}" does not match {config.dnsapi_domains}')
-        if method == "DELETE" and dns_01.action != "teardown":
+        if method == "DELETE" and dns_01.action not in ["teardown", "remove"]:
             logger.error('"%s" action with DELETE method from %s', dns_01.action, self._remote_ip)
             return self.respond(400, "DELETE method only supports 'teardown' argument")
         logger.debug("dns-01 message: %s from %s", dns_01, self._remote_ip)
