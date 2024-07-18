@@ -109,6 +109,13 @@ class Config:
             if self.allowed_proxies:
                 self.proxy_xff = self._get("proxy_xff", "X-Forwarded-For")
         self.basic_auth = self._get("basic_auth")
+        if "ALL_PROXY" in os.environ and not "HTTP_PROXY" in os.environ:
+            os.environ["HTTP_PROXY"] = os.environ["ALL_PROXY"]
+        if "ALL_PROXY" in os.environ and not "HTTPS_PROXY" in os.environ:
+            os.environ["HTTPS_PROXY"] = os.environ["ALL_PROXY"]
+        if not "HTTPS_PROXY" in os.environ and "ALL_PROXY" in self._dotenv:
+            os.environ["HTTP_PROXY"] = self._dotenv["ALL_PROXY"]
+            os.environ["HTTPS_PROXY"] = self._dotenv["ALL_PROXY"]
 
         # Check configuration for completeness and issues
         if self.basic_auth and self.basic_auth.lower() in ["sufficient", "required"]:
@@ -161,7 +168,8 @@ class Config:
 
     def _get_list(self, var: str, required=None) -> list:
         value = self._get(var, required)
-        if not value:  return None
+        if not value:
+            return None
         result = []
         for item in value.split(","):
             result.append(item.strip())
@@ -170,7 +178,8 @@ class Config:
     def _get_iplist(self, var: str) -> list:
         # Splits a csv list of ip-addresses or networks into list of network objects
         value = self._get_list(var)
-        if not value:  return None
+        if not value:
+            return None
         result = []
         for ip in value:
             try:

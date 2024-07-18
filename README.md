@@ -64,16 +64,21 @@ precedence):
 | `DNSAPI_MODULE` | -m | ✓ | ✓ | Error | Python module to load for DNSAPI |
 | `DNSAPI_CLASS` | -c | ✓ | ✓ | Error | Class in `DNSAPI_MODULE` to use as DNSAPI |
 | `DNSAPI_DOMAINS`<sup>1</sup> | ✗ | ✓ | ✓ | Error | List of (Sub-)Domains manageable via API |
+| `ALL_PROXY`<sup>2</sup> | ✗ | ✗ | ✓ | None | Forward proxy to use for providers |
 | `SSL_CERT` | ✗ | ✓ | ✓ | cert.pem | Path to SSL certificate file |
 | `SSL_KEY`  | ✗| ✓ | ✓ | key.pem | Path to SSL key file |
-| `BASIC_AUTH`<sup>2</sup> | ✗ | ✓ | ✓ | None | Enable Basic authentication on API |
-| `ALLOWED_HOSTS`<sup>1,2</sup> | ✗ | ✓ | ✓ | None | List of remote IP's/networks allowed to use API |
-| `ALLOWED_PROXIES`<sup>1,3</sup> | ✗ | ✓ | ✓ | None | List of remote IP's/networks allowed to set XFF header |
+| `BASIC_AUTH`<sup>3</sup> | ✗ | ✓ | ✓ | None | Enable Basic authentication on API |
+| `ALLOWED_HOSTS`<sup>1,3</sup> | ✗ | ✓ | ✓ | None | List of remote IP's/networks allowed to use API |
+| `ALLOWED_PROXIES`<sup>1,4</sup> | ✗ | ✓ | ✓ | None | List of remote IP's/networks allowed to set XFF header |
 | `PROXY_XFF`<sup>3</sup> | ✗ | ✓ | ✓ | X-Forwarded-For | XFF header to use |
 
 Note <sup>1</sup>: Lists are comma-separated<br/>
-Note <sup>2</sup>: One of `BASIC_AUTH` or `ALLOWED_HOSTS` must be set, both may be set. See "API Authentication"<br/>
-Note <sup>3</sup>: Only relevant if `ALLOWED_HOSTS` is set.
+Note <sup>2</sup>: Uses standard proxy environment variables (`ALL_PROXY`,
+`HTTPS_PROXY`). If these are not set in environment, use `ALL_PROXY` from
+`.env` as `HTTP_PROXY` and `HTTPS_PROXY` value.<br/>
+Note <sup>3</sup>: One of `BASIC_AUTH` or `ALLOWED_HOSTS` must be set, both may
+be set. See "API Authentication"<br/>
+Note <sup>4</sup>: Only relevant if `ALLOWED_HOSTS` is set.
 
 #### `.env` file parsing
 
@@ -122,7 +127,7 @@ Payload must be valid json and conform to the `mod_md` naming of the arguments.
 
 ```json
 {
-    "argument": "setup|teardown",
+    "argument": "setup|add|teardown|remove",
     "domain_name": "fully.qualified.example.com",
     "challenge_content": "abcdef123456790" 
 }
