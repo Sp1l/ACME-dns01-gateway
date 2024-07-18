@@ -8,6 +8,7 @@ dnsapi_password="My very long and complex passphrase"
 DNSAPI_MODULE = providers.openprovider
 DNSAPI_CLASS = OpenProvider
 DNSAPI_DOMAINS = example.com, subdomain.example.net
+ALL_PROXY = http://fwdproxy.example.com:3128
 
 # Enable basic authentication: values
 #  * no value: Basic auth disabled
