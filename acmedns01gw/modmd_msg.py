@@ -20,8 +20,8 @@ class ModMDMsg:
 
     @action.setter
     def action(self, value: str):
-        if value not in ["setup", "teardown"]:
-            raise ValueError("action must be one of setup or teardown")
+        if value not in ["setup", "add", "teardown", "remove"]:
+            raise ValueError("action must be one of setup/add or teardown/remove")
         self._verb = value
 
     @property
