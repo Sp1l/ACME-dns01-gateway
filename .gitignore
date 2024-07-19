@@ -95,3 +95,6 @@ venv.bak/
 
 # Cython debug symbols
 cython_debug/
+
+# Microsoft Visual Studio Code
+.vscode

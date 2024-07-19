@@ -83,7 +83,7 @@ class OpenProvider:
         uri = OPENPROVIDER_APIBASE + api + params
 
         req = request.Request(uri, data=data, method=method)
-        req.add_header("User-Agent", "ACME-dns01-gateway/0.0.1-alpha")
+        req.add_header("User-Agent", "ACME-dns01-gateway/0.1.1-beta")
         req.add_header("Accept", "application/json, text/plain")
         req.add_header("Content-Type", "application/json")
         if api != OPENPROVIDER_LOGIN:

@@ -156,11 +156,10 @@ class MyDNSProvider():
 
 Check out the `providers\openprovider.py` example.
 
-# Resources
+## Resources
 
 Python examples for various DNS providers can be found in e.g.
 [certbot's repo](https://github.com/certbot/certbot/), in the `certbot-dns-*`
 directories.
 Shell-script examples can be found in e.g. [acme.sh](https://acme.sh)'s repo
 [dnsapi dir](https://github.com/acmesh-official/acme.sh/tree/master/dnsapi).
->>>>>>> 12583ee (First barely working alpha release)
